@@ -1,8 +1,7 @@
 import pandas as pd
 
-file_path = input("Enter the file path to your CSV file: ")
-
-data = pd.read_csv(file_path)
+data = pd.read_csv(
+    r'C:\-AL-\all projects\vs code projects\personal-projects\data-analyzer\responses.csv')
 
 # Questions from data
 count_questions = [
@@ -19,20 +18,12 @@ count_questions = [
     "Which of these sustainability campaigns/projects are you interested in and would like to see in your community?"
 ]
 
-# Separated counts for responses
+# Count and display percentage of respondents
 for question in count_questions:
-    if question in data.columns:
-        print(f'\nDetailed count for "{question}":')
+    print(f'\nCount and % for "{question}":')
 
-        # Separate rows
-        split_data = data[question].dropna().str.split(', ').explode()
-        counts = split_data.value_counts()
-        percentages = (counts / data.shape[0]) * 100
+    counts = data[question].value_counts()
+    percentages = (counts / data.shape[0]) * 100
 
-        # Display counts and percentages
-        display_data = pd.DataFrame(
-            {'Count': counts, 'Percentage': percentages})
-        print(display_data)
-
-    else:
-        print(f"Question '{question}' not found in the dataset.")
+    display_data = pd.DataFrame({'Count': counts, 'Percentage': percentages})
+    print(display_data)
